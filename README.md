@@ -50,6 +50,7 @@ O aplicativo deve funcionar da seguinte maneira:
         • Relação de reservas atendidas ou não em um certo período.
         • Relação de reservas feitas para determinada mesa
         • Relação de mesas confirmadas por garçom.
+        
     Ao solicitar um relatório o gerente recebe os dados do relatório ou uma mensagem informando que não há dados que atendem o relatório solicitado.
 
 <h3> <b>Servidor da Aplicação </b> </h3>
