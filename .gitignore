@@ -3,7 +3,7 @@ __pycache__/
 *.py[cod]
 *.pyo
 
-# === SQLite (caso use banco local) ===
+# === Arquivos desnecessários do SQLite ===
 *.db
 *.sqlite3
 
