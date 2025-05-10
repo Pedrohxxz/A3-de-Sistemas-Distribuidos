@@ -1,5 +1,6 @@
 # A3-de-Sistemas-Distribuidos
-Um trabalho da UNIFACS,UC Sistemas Distribuidos
+Um trabalho da UNIFACS
+UC Sistemas Distribuidos
 
 <h1> <b>Projeto A3</b> </h1>
 
