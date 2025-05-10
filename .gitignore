@@ -1,0 +1,28 @@
+# === Python ===
+__pycache__/
+*.py[cod]
+*.pyo
+
+# === SQLite (caso use banco local) ===
+*.db
+*.sqlite3
+
+# === Logs ===
+*.log
+
+# === Ambientes virtuais ===
+venv/
+.env/
+env/
+
+# === IDEs e editores ===
+.vscode/
+.idea/
+
+# === Arquivos temporários do sistema ===
+.DS_Store
+Thumbs.db
+
+# === Arquivos temporários de testes ou backup ===
+*.tmp
+*.bak
