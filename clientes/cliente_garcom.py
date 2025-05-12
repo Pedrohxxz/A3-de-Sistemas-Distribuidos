@@ -16,6 +16,7 @@ def garcom_confirmar_reserva():
     numero_mesa = int(input("Número da mesa: "))
     data = input("Data (dd/mm/aaaa): ")
     hora = input("Hora (hh:mm): ")
+    print()
     return f"GARCOM_CONFIRMAR;{garcom_id};{numero_mesa};{data};{hora}"
 
 

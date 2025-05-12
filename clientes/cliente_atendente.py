@@ -18,6 +18,7 @@ def atendente_criar_reserva():
     numero_mesa = int(input("Número da mesa: "))
     quantidade = int(input("Quantidade de pessoas: "))
     nome = input("Nome do responsável: ")
+    print()
     return f"ATENDENTE_CRIAR;{data};{hora};{numero_mesa};{quantidade};{nome}"
 
 
@@ -26,6 +27,7 @@ def atendente_cancelar_reserva():
     hora = input("Hora (hh:mm): ")
     numero_mesa = input("Número da mesa: ")
     nome = input("Nome do responsável: ")
+    print()
     return f"ATENDENTE_CANCELAR;{data};{hora};{numero_mesa};{nome}"
 
 
