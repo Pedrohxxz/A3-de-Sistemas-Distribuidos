@@ -32,6 +32,10 @@ def processar_requisicao(mensagem):
         )
     elif comando == "GERENTE_RELATORIO_MESA":
         return relatorio_por_mesa(int(partes[1]))
+    elif comando == "GERENTE_RELATORIO_PERIODO":
+        return relatorio_por_periodo(partes[1], partes[2])
+    elif comando == "GERENTE_RELATORIO_GARCOM":
+        return relatorio_por_garcom(int(partes[1]))
     else:
         return "Comando desconhecido."
 
@@ -112,3 +116,35 @@ def relatorio_por_mesa(numero_mesa):
 
     resposta = "\n".join([f"ID {r[0]} - {r[1]} {r[2]} - Status: {r[6]}" for r in resultados])
     return resposta
+
+def relatorio_por_periodo(data_inicio, data_fim):
+    conn = sqlite3.connect("banco.sqlite")
+    cursor = conn.cursor()
+    cursor.execute("""
+        SELECT * FROM reservas 
+        WHERE data BETWEEN ? AND ?""", (data_inicio, data_fim))
+    
+    resultados = cursor.fetchall()
+    conn.close()
+
+    if not resultados:
+        return "Nenhuma reserva encontrada nesse período."
+    
+    resposta = "\n".join([f"Mesa {r[3]} - {r[1]} {r[2]} - Responsável: {r[5]} - Status: {r[6]}" for r in resultados])
+
+    return resposta
+
+def relatorio_por_garcom(garcom_id):
+    conn = sqlite3.connect("banco.sqlite")
+    cursor = conn.cursor()
+    cursor.execute("SELECT * FROM reservas WHERE garcom_id = ?", (garcom_id))
+    resultados = cursor.fetchall()
+    conn.close()
+
+    if not resultados:
+        return "Nenhuma reserva encontrada para esse garçom."
+    
+    resposta = "\n".join([f"Mesa {r[3]} - {r[1]} {r[2]} - Responsável: {r[5]}" for r in resultados])
+
+    return resposta
+    
