@@ -1,5 +1,7 @@
 import socket
 
+from datetime import datetime
+
 HOST = "localhost"
 PORT = 12345
 
@@ -20,7 +22,13 @@ def relatorio_por_periodo():
     data_inicio = input("Data de inicio (dd/mm/aaaa):")
     data_fim = input("Data de fim (dd/mm/aaaa):")
 
-    return f"GERENTE_RELATORIO_PERIODO; {data_inicio} ; {data_fim}"
+    try:
+        di = datetime.strptime(data_inicio, "%d/%m/%Y").strftime("%Y-%m-%d")
+        df = datetime.strptime(data_fim, "%d/%m/%Y").strftime("%Y-%m-%d")
+    except ValueError:
+        return "FORMATO_INVÁLIDO"
+    
+    return f"GERENTE_RELATORIO_PERIODO;{di};{df}"
 
 def relatorio_por_garcom():
     garcom_id = input("ID do garçom:")
@@ -44,13 +52,17 @@ def main():
         if opcao == "1":
             mensagem = relatorio_por_mesa()
             enviar_mensagem(mensagem)
-        elif opcao == 2:
+        elif opcao == "2":
             mensagem = relatorio_por_periodo()
-            enviar_mensagem(mensagem)
-        elif opcao == 3:
+            if mensagem == "FORMATO_INVÁLIDO":
+                print("Formato de data inválido. Tente novamente.")
+            else:
+                enviar_mensagem(mensagem)
+                
+        elif opcao == "3":
             mensagem = relatorio_por_garcom()
             enviar_mensagem(mensagem)
-        elif opcao == 4:
+        elif opcao == "4":
             print("Saindo...")
             break
         else:

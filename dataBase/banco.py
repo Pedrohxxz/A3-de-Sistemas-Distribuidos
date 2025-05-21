@@ -1,5 +1,16 @@
 import sqlite3
 
+from datetime import datetime
+
+def formatar_data_iso(data_str):
+    try:
+        if "/" in data_str:
+            return datetime.strptime(data_str, "%d/%m/%Y").strftime("%Y-%m-%d")
+        return data_str
+    except ValueError:
+        return data_str
+
+
 def inicializar_banco():
     conn = sqlite3.connect("banco.sqlite")
     cursor = conn.cursor()
@@ -57,7 +68,7 @@ def criar_reserva(data, hora, numero_mesa, quantidade, nome):
 
     conn.commit()
     conn.close()
-    return "Reserva criada com sucesso."
+    return "Reserva criada com sucesso.\n"
 
 
 def cancelar_reserva(data, hora, numero_mesa, nome):
@@ -80,7 +91,7 @@ def cancelar_reserva(data, hora, numero_mesa, nome):
     cursor.execute("DELETE FROM reservas WHERE id = ?", (reserva[0],))
     conn.commit()
     conn.close()
-    return "Reserva cancelada com sucesso."
+    return "Reserva cancelada com sucesso.\n"
 
 
 def confirmar_reserva(garcom_id, numero_mesa, data, hora):
@@ -101,7 +112,7 @@ def confirmar_reserva(garcom_id, numero_mesa, data, hora):
     )
     conn.commit()
     conn.close()
-    return "Reserva confirmada com sucesso."
+    return "Reserva confirmada com sucesso.\n"
 
 
 def relatorio_por_mesa(numero_mesa):
@@ -112,39 +123,77 @@ def relatorio_por_mesa(numero_mesa):
     conn.close()
 
     if not resultados:
-        return "Nenhuma reserva encontrada para essa mesa."
+        return "Nenhuma reserva encontrada para essa mesa.\n"
 
-    resposta = "\n".join([f"ID {r[0]} - {r[1]} {r[2]} - Status: {r[6]}" for r in resultados])
+    linhas = []
+    for r in resultados:
+        try:
+            data_formatada = datetime.strptime(r[1], '%Y-%m-%d').strftime('%d/%m/%Y')
+        except ValueError:
+            data_formatada = r[1]
+        linha = f"ID {r[0]} - {data_formatada} {r[2]} - Status: {r[6]}"
+        linhas.append(linha)
+    resposta = "\n".join(linhas)
+
+
     return resposta
+    
 
 def relatorio_por_periodo(data_inicio, data_fim):
+    # Converte para o formato ISO se ainda estiver em dd/mm/aaaa
+    try:
+        if "/" in data_inicio:
+            data_inicio = datetime.strptime(data_inicio, "%d/%m/%Y").strftime("%Y-%m-%d")
+        if "/" in data_fim:
+            data_fim = datetime.strptime(data_fim, "%d/%m/%Y").strftime("%Y-%m-%d")
+    except ValueError:
+        return "Erro: data inválida."
+
     conn = sqlite3.connect("banco.sqlite")
     cursor = conn.cursor()
     cursor.execute("""
         SELECT * FROM reservas 
-        WHERE data BETWEEN ? AND ?""", (data_inicio, data_fim))
-    
+        WHERE data BETWEEN ? AND ?
+    """, (data_inicio, data_fim))
+
     resultados = cursor.fetchall()
     conn.close()
 
     if not resultados:
-        return "Nenhuma reserva encontrada nesse período."
-    
-    resposta = "\n".join([f"Mesa {r[3]} - {r[1]} {r[2]} - Responsável: {r[5]} - Status: {r[6]}" for r in resultados])
+        return "Nenhuma reserva encontrada nesse período.\n"
 
-    return resposta
+    linhas = []
+    for r in resultados:
+        try:
+            data_formatada = datetime.strptime(r[1], "%Y-%m-%d").strftime('%d/%m/%Y')
+        except ValueError:
+            data_formatada = r[1]
+        linha = f"Mesa {r[3]} - {data_formatada} {r[2]} - Responsável: {r[5]} - Status: {r[6]}"
+        linhas.append(linha)
+
+    return "\n".join(linhas)
+
 
 def relatorio_por_garcom(garcom_id):
     conn = sqlite3.connect("banco.sqlite")
     cursor = conn.cursor()
-    cursor.execute("SELECT * FROM reservas WHERE garcom_id = ?", (garcom_id))
+    cursor.execute("SELECT * FROM reservas WHERE garcom_id = ?", (garcom_id,))
     resultados = cursor.fetchall()
     conn.close()
 
     if not resultados:
-        return "Nenhuma reserva encontrada para esse garçom."
+        return "Nenhuma reserva encontrada para esse garçom.\n"
     
-    resposta = "\n".join([f"Mesa {r[3]} - {r[1]} {r[2]} - Responsável: {r[5]}" for r in resultados])
+    linhas = []
+    for r in resultados:
+        try:
+            data_formatada = datetime.strptime(r[1], '%Y-%m-%d').strftime('%d/%m/%Y')
+        except ValueError:
+            data_formatada = r[1]
+        linha = f"Mesa {r[3]} - {data_formatada} {r[2]} - Responsável: {r[5]}"
+        linhas.append(linha)
+    resposta = "\n".join(linhas)
+
 
     return resposta
     
