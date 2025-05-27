@@ -103,6 +103,9 @@ sequenceDiagram
 
 <h3><b>1. Iniciar Servidor:</b></h3>
 
+> 💡 Use `python3` no Linux/macOS.  
+> 💡 No Windows, o comando pode ser apenas `python`.
+
 ```bash
 python3 server/servidor.py
 ```
