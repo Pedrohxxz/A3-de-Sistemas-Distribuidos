@@ -1,60 +1,117 @@
 # A3-de-Sistemas-Distribuidos
-Um trabalho da UNIFACS <br>
-UC Sistemas Distribuidos
+![unifacsLogo](img/unifacs-seeklogo.png) <br>
 
-<h1> <b>Projeto A3</b> </h1>
+<h1> <b>Sistema de Gerenciamento de Reservas de Mesas com Comunicação Cliente-Servidor em Python</b> </h1>
 
-<h2> <b>Descrição</b> </h2>
+<h2> <b>Resumo</b> </h2>
 
-Este trabalho constitui a nota da avaliação A3 da UC Sistemas Distribuídos e Mobile.
-O trabalho deverá ser feito em equipe com no A3mínimo 3 e no máximo 6
-componentes.
+Este projeto implementa um sistema de reservas de mesas para um restaurante, utilizando arquitetura cliente-servidor com sockets TCP em Python e banco de dados SQLite. O sistema permite que diferentes tipos de usuários interajam: atendentes podem criar ou cancelar reservas, garçons podem confirmar, e gerentes podem gerar relatórios por mesa, por período ou por garçom.
 
-<h2> <b>Requisitos</b> </h2>
+<h2> <b>Objetivo</b> </h2>
 
-O trabalho consiste em criar um aplicativo cliente-servidor para reserva de mesas em um restaurante.
+* Desenvolver um sistema distribuído simples.
 
-O aplicativo deve funcionar da seguinte maneira:
+* Trabalhar com comunicação via sockets.
 
-    • Há 3 tipos diferentes de clientes: o atendente de reservas, o garçom e o gerente do restaurante.
+* Praticar manipulação de banco de dados em SQLite.
 
-    ◦ O atendente de reservas cadastra reservar solicitadas por possíveis frequentadores do restaurante
+* Simular perfis de usuários com diferentes permissões.
 
-    ◦ O garçom confirma a ocupação da mesa reservada ao atender um frequentador que fez a reserva
+<h2> <b>Tecnologias Utilizadas</b> </h2>
 
-    ◦ O gerente que emite relatórios em tempo real sobre o andamento das reservas
+|Tecnologia  |Descrição                                 |
+|------------|------------------------------------------|
+|Python      |Linguagem de programação principal        |
+|Sockets TCP |Comunicação entre cliente e servidor      |
+|SQLite      |Armazenamento local de dados              |
+|VS Code     |Ambiente de desenvolvimento               |
 
-    •Cada tipo de cliente deve ter capturar informações do usuário por meio de um front-end simples (pode ser texto, web, ...)
+<h2> <b>Estrutura do projeto</b> </h2>
 
-    • Um servidor hospeda o banco de dados e a parte back-end da aplicação e responde as requisições enviadas pelos clien(atendente, garçom ou gerente).
+<pre> A3_SD/
+├── cliente_atendente/
+│ └── cliente_atendente.py
+├── cliente_garcom/
+│ └── cliente_garcom.py
+├── cliente_gerente/
+│ └── cliente_gerente.py
+├── dataBase/
+│ ├── banco.py
+│ └── banco.sqlite
+├── server/
+│ └── servidor.py
+|── img/
+| └──unifacs-seeklogo.png 
+├── README.md </pre>
 
-    • Os dados devem ser armazenados em um banco de dados relacional (ex.MySQL, SQLite, etc.)
+<h2> <b>Funcionamento do Sistema</b> </h2>
 
-    • A aplicação pode ser desenvolvida utilizando as linguagens Python, Java,Javascript, C ou C++
+<h3><b>Atendente</b></h3>
 
-<h2> <b>Detalhamento do Funcionamento da Aplicação</b> </h2>
+* Criar reservas
 
-<h3><b>Cliente Atendente</b> </h3>
-    Envia mensagens ao servidor para criar uma reserva ou cancelar uma reserva.
-    Uma reserva deve conter data, hora, número da mesa, quantidade de pessoas e nome do responsável (pessoa que encomendou a reserva).
-    Ao criar ou cancelar uma reserva o servidor deve retornar uma mensagem informando se a operação foi bem sucedida ou se algum problema ocorreu (ex.: a mesa solicitada já está reservada).
-<h3> <b>Cliente Garçom </b> </h3>
-    Envia mensagens ao servidor para confirmar que uma reserva feita anteriormente foi utilizada.
-    A confirmação do garçom muda o status da mesa. Uma mesa que está reservada, ao ser confirmada, fica novamente livre para receber uma nova reserva em uma data futura.
-    Ao confirmar uma reserva o servidor deve retornar uma mensagem informando se a operação foi bem sucedida ou se algum problema ocorreu (ex.: a mesa confirmada não estava reservada).
-<h3> <b>Cliente Gerente </b> </h3>
-    Envia mensagens ao servidor para solicitar relatórios de acompanhamento das reservas.
+* Cancelar reservas
 
-    Os relatórios devem ser:
+* Envia comandos ATENDENTE_CRIAR e ATENDENTE_CANCELAR
 
-        • Relação de reservas atendidas ou não em um certo período.
-        • Relação de reservas feitas para determinada mesa
-        • Relação de mesas confirmadas por garçom.
-        
-    Ao solicitar um relatório o gerente recebe os dados do relatório ou uma mensagem informando que não há dados que atendem o relatório solicitado.
+<h3><b>Garçom</b></h3>
 
-<h3> <b>Servidor da Aplicação </b> </h3>
+* Confirmar reservas
 
-    Aguarda mensagens com solicitações de clientes e retorna respostas adequadas.
-    Ao receber uma solicitação de cliente, pesquisa e/ou altera as informações no banco de dados e retorna mensagens com respostas ou informações pertinentes ao funcionamento da aplicação.
-<h3> <b>Clientes e servidores devem se comunicar usando uma das abordagens demonstradas nas aulas práticas da UC (ex.: Sockets, API, RPC, ...)</b> </h3>
+* Envia comando GARCOM_CONFIRMAR
+
+<h3><b>Gerentte</b></h3>
+
+* Relatório por mesa
+
+* Relatório por período (datas no formato dd/mm/aaaa)
+
+* Relatório por garçom
+
+* Envia comandos GERENTE_RELATORIO_MESA, GERENTE_RELATORIO_PERIODO e GERENTE_RELATORIO_GARCOM
+
+
+<h2> <b>Modelo da Tabela no Banco</b> </h2>
+
+|Campo             |Tipo   |Descrição                           |
+|------------------|-------|------------------------------------|
+|id                |INTEGER|ID da reservas(PK)                  |
+|data              |TEXT   |Data da reserva(ISO:yyyy-mm-dd)     |
+|hora              |TEXT   |Hora da reserva                     |
+|numero_mesa       |INTEGER|Número da mesa                      |
+|quantidade_pessoas|INTEGER|Número de pessoas                   |
+|nome_resposavel   |TEXT   |Nome da pessoa que fez a reserva    |
+|status            |TEXT   |'reservado' ou confirmado           |
+|garcom_id         |INTEGER|ID do garçom que confirmou(opcional)|
+
+
+<h2> <b>Fluxo de Comunicação</b> </h2>
+
+<details>
+<summary>📡 Clique e veja como funciona a comunicação</summary>
+
+```mermaid
+sequenceDiagram
+    Cliente->>Servidor: Envia comando com dados
+    Servidor->>banco.py: processar_requisicao(comando)
+    banco.py-->>Servidor: Retorna resposta
+    Servidor-->>Cliente: Envia resposta via socket
+```
+</details>
+
+<h2> <b>Execução</b> </h2>
+
+<h3><b>1. Iniciar Servidor:</b></h3>
+
+```bash
+python3 server/servidor.py
+```
+
+<h3><b>2. Abrir outro terminal para cada cliente:</b></h3>
+
+```bash
+python3 cliente_atendente/cliente_atendente.py
+python3 cliente_garcom/cliente_garcom.py
+python3 cliente_gerente/cliente_gerente.py
+```
+
