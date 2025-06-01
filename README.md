@@ -30,6 +30,8 @@ Este projeto implementa um sistema de reservas de mesas para um restaurante, uti
 <h2> <b>Estrutura do projeto</b> </h2>
 
 <pre> A3_SD/
+├── Documentação
+| └── ProjetoA3.pdf
 ├── cliente_atendente/
 │ └── cliente_atendente.py
 ├── cliente_garcom/
