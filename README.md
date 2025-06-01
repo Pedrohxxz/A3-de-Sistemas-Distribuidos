@@ -25,6 +25,7 @@ Este projeto implementa um sistema de reservas de mesas para um restaurante, uti
 |Sockets TCP |Comunicação entre cliente e servidor      |
 |SQLite      |Armazenamento local de dados              |
 |VS Code     |Ambiente de desenvolvimento               |
+|UbuntoOS    |Sistema operacional ultilizado            |
 
 <h2> <b>Estrutura do projeto</b> </h2>
 
@@ -118,3 +119,4 @@ python3 cliente_garcom/cliente_garcom.py
 python3 cliente_gerente/cliente_gerente.py
 ```
 
+[Clique aqui para baixar o PDF da documentação](Documentação/ProjetoA3.pdf)
