@@ -120,3 +120,7 @@ python3 cliente_gerente/cliente_gerente.py
 ```
 
 [Clique aqui para baixar o PDF da documentação](Documentação/ProjetoA3.pdf)
+
+<h2> <b>Vídeo explicativo</b> </h2>
+
+[![Assista no YouTube](https://img.youtube.com/vi/FSJ-6426Ih0/0.jpg)](https://www.youtube.com/watch?v=FSJ-6426Ih0)
