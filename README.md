@@ -7,6 +7,9 @@
 
 Este projeto implementa um sistema de reservas de mesas para um restaurante, utilizando arquitetura cliente-servidor com sockets TCP em Python e banco de dados SQLite. O sistema permite que diferentes tipos de usuários interajam: atendentes podem criar ou cancelar reservas, garçons podem confirmar, e gerentes podem gerar relatórios por mesa, por período ou por garçom.
 
+
+[Clique aqui para ser direcionado ao relatório do projeto!](Documentação/Relatório.pdf)
+
 <h2> <b>Objetivo</b> </h2>
 
 * Desenvolver um sistema distribuído simples.
@@ -32,6 +35,7 @@ Este projeto implementa um sistema de reservas de mesas para um restaurante, uti
 <pre> A3_SD/
 ├── Documentação
 | └── ProjetoA3.pdf
+| └── Relatório.pdf 
 ├── cliente_atendente/
 │ └── cliente_atendente.py
 ├── cliente_garcom/
@@ -102,9 +106,28 @@ sequenceDiagram
 ```
 </details>
 
+
+<h2> <b>Requerimento de softwares</b> </h2>
+
+|Componente       |Versão minima recomendada|Descrição                                                 |
+|-----------------|-------------------------|----------------------------------------------------------|
+|Python           |3.8 ou superior          |Linguagem de programação no servidor e clientes           |
+|Biblioteca socket|Padrão no python         |Usada para comunicação entre clientes e servidor          |
+|SQLite3          |Padrão no python         |Banco de dados local e leve, usado para registrar reservas|               
+|VS Code          |Qualquer versão          |Ambiente de desenvolvimento/testes                        |   
+
+
 <h2> <b>Execução</b> </h2>
 
-<h3><b>1. Iniciar Servidor:</b></h3>
+<h3><b>1. Clone do repositório:</b></h3>
+
+<h4><b>Comando:</b></h4>
+
+```bash
+git clone https://github.com/Pedrohxxz/A3-de-Sistemas-Distribuidos.git
+```
+
+<h3><b>2. Iniciar Servidor:</b></h3>
 
 > 💡 Use `python3` no Linux/macOS.  
 > 💡 No Windows, o comando pode ser apenas `python`.
@@ -113,7 +136,7 @@ sequenceDiagram
 python3 server/servidor.py
 ```
 
-<h3><b>2. Abrir outro terminal para cada cliente:</b></h3>
+<h3><b>3. Abrir outro terminal para cada cliente:</b></h3>
 
 ```bash
 python3 cliente_atendente/cliente_atendente.py
@@ -125,4 +148,4 @@ python3 cliente_gerente/cliente_gerente.py
 
 <h2> <b>Vídeo explicativo</b> </h2>
 
-[![Assista no YouTube](https://img.youtube.com/vi/FSJ-6426Ih0/0.jpg)](https://www.youtube.com/watch?v=FSJ-6426Ih0)
+[![Assista no YouTube](https://img.youtube.com/vi/VLFd6wsUTQ0/0.jpg)](https://www.youtube.com/watch?v=VLFd6wsUTQ0)
